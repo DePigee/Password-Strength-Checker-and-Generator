@@ -1,5 +1,6 @@
 from .rules import has_min_length, has_uppercase, has_lowercase, has_digit, has_symbol, is_not_common_password
 from .checker import PasswordChecker
+from .generator import generate_password
    
 def main():
     password = "password!"
@@ -10,6 +11,7 @@ def main():
     
     password_checker = PasswordChecker(rules_list)
     print(password_checker.check(password))
+    generate_password(20)
     
 if __name__ == "__main__":
     main()
