@@ -1,11 +1,14 @@
+import pytest
+
 from password_tool.rules import (
     has_min_length,
     has_uppercase,
     has_lowercase,
     has_digit,
     has_symbol,
+    is_not_common_password, 
+    password_loader
 )
-
 
 # has_min_length
 def test_min_length_exactly_12_passes():
@@ -60,3 +63,19 @@ def test_symbol_missing():
 
 def test_symbol_empty_string():
     assert has_symbol("") is False
+
+def test_common_password_rejected():
+    assert is_not_common_password("password") is False
+
+def test_common_password_case_insensitive():
+    assert is_not_common_password("PASSWORD") is False
+
+def test_uncommon_password_passes():
+    assert is_not_common_password("Xk9!mQ2vLp") is True
+
+def test_empty_string_passes_common_check():
+    assert is_not_common_password("") is True
+
+def test_missing_file_raises():
+    with pytest.raises(FileNotFoundError):
+        password_loader("does_not_exist.txt")
